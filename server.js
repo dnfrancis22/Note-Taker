@@ -46,10 +46,12 @@ app.post("/api/notes", (req, res) => {
     console.log(db)
     fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>
   err ? console.error(err) : console.log('Success!')
+  
 );
 
 //for delete you will need to look through your array for a match, once you get it 
 //get the index location to remove the item (splice)
+//req.params
 
 
     

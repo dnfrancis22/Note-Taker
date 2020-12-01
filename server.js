@@ -33,11 +33,6 @@ app.get("/api/notes", (req, res) => {
   });
 });
 app.post("/api/notes", (req, res) => {
-  //data passed in in an obj(bodyparser=>req.body) that contains title and text
-  //once I get my data what do we do
-  //save it to json file db (array of objects).
-  //push it (obj) into the array
-  //update the obj with an id
   req.body.id = uuidv4();
   db.push(req.body);
   console.log(db);
@@ -51,19 +46,20 @@ app.post("/api/notes", (req, res) => {
 app.delete("/api/notes/:id", (req, res) => {
   const deleteNote = req.params.id;
 
-  fs.readFile("./db/db.json", JSON.stringify(db), (err) =>
-    err ? console.error(err) : console.log("Success!")
-  );
-  db = JSON.parse(data);
-  for (var i = 0; i < db.length; i++) {
-    if (db[i].id === Number(deleteNote)) {
-      db.splice([i], 1);
+  fs.readFile("./db/db.json", JSON.stringify(db), (err) => {
+    err ? console.error(err) : console.log("Success!");
+    db = JSON.parse(data);
+    for (var i = 0; i < db.length; i++) {
+      if (db[i].id === Number(deleteNote)) {
+        db.splice([i], 1);
+      }
     }
-  }
-  fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>
+    fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>{
     err ? console.error(err) : console.log("Success!")
-  );
+    });
+  });
 });
+
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/index.html"));
 });

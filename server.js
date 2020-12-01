@@ -46,16 +46,16 @@ app.post("/api/notes", (req, res) => {
 app.delete("/api/notes/:id", (req, res) => {
   const deleteNote = req.params.id;
 
-  fs.readFile("./db/db.json", JSON.stringify(db), (err) => {
-    err ? console.error(err) : console.log("Success!");
-    db = JSON.parse(data);
+  fs.readFile("./db/db.json", (err, data) => {
+    err ? console.error(err) : console.log("Success!1");
+    // db = JSON.parse(data);
     for (var i = 0; i < db.length; i++) {
-      if (db[i].id === Number(deleteNote)) {
-        db.splice([i], 1);
+      if (db[i].id === ":id") {
+        db.splice(db[i]);
       }
     }
     fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>{
-    err ? console.error(err) : console.log("Success!")
+    err ? console.error(err) : console.log("Success!2")
     });
   });
 });

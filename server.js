@@ -32,30 +32,41 @@ app.get("/api/notes", (req, res) => {
     console.log(data);
   });
 });
+
 app.post("/api/notes", (req, res) => {
   req.body.id = uuidv4();
   db.push(req.body);
-  console.log(db);
-  fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>
+  // console.log(db);
+  fs.writeFile("./db/db.json", JSON.stringify(db), (err) => {
     err ? console.error(err) : console.log("Success!")
-  );
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+      }
+      return res.json(JSON.parse(data));
+    });
+  });
 });
-//for delete you will need to look through your array for a match, once you get it
-//get the index location to remove the item (splice)
-//req.params
+
 app.delete("/api/notes/:id", (req, res) => {
   const deleteNote = req.params.id;
 
   fs.readFile("./db/db.json", (err, data) => {
     err ? console.error(err) : console.log("Success!1");
-    // db = JSON.parse(data);
+
     for (var i = 0; i < db.length; i++) {
-      if (db[i].id === ":id") {
-        db.splice(db[i]);
+      if (db[i].id === deleteNote) {
+        db.splice(db[i], 1);
       }
     }
-    fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>{
-    err ? console.error(err) : console.log("Success!2")
+    fs.writeFile("./db/db.json", JSON.stringify(db), (err) => {
+      err ? console.error(err) : console.log("Success!")
+      fs.readFile("./db/db.json", "utf8", (err, data) => {
+        if (err) {
+          console.error(err);
+        }
+        return res.json(JSON.parse(data));
+      });
     });
   });
 });
@@ -63,6 +74,7 @@ app.delete("/api/notes/:id", (req, res) => {
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/index.html"));
 });
+
 app.listen(PORT, function () {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

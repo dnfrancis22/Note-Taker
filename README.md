@@ -7,7 +7,7 @@ This is a note taking app. You can use this app to take notes save them and dele
 **Installation**
 
 Clone the project from Github. In VS Code from the terminal run npm start and click on the link that pops up.
-You can also click this link.
+You can also click this link. https://boiling-plains-85679.herokuapp.com/
 
 **Usage**
 
